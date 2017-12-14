@@ -9,7 +9,8 @@ int main(int argc, char** argv){
   // Create a VideoCapture object and open the input file
   // If the input is the web camera, pass 0 instead of the video file name
   VideoCapture cap(argv[1]); 
-    
+  double framenum = 0;
+
   // Check if camera opened successfully
   if(!cap.isOpened()){
     cout << "Error opening video stream or file" << endl;
@@ -38,7 +39,8 @@ int main(int argc, char** argv){
       break;
     else if(c==101)     // if you press 'e'
     {
-        
+        cin >> framenum;
+        cap.set(CV_CAP_PROP_POS_FRAMES, framenum-1);
     }
 
   }
