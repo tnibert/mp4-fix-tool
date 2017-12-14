@@ -27,7 +27,11 @@ int main(int argc, char** argv){
   
     // If the frame is empty, break immediately
     if (frame.empty())
-      break;
+    {
+      //break;
+      cap.set(CV_CAP_PROP_POS_FRAMES, 1);
+      cap >> frame;
+    }
 
     cout << "Frame Number: " << cap.get(CV_CAP_PROP_POS_FRAMES) << "\n";
     // Display the resulting frame
