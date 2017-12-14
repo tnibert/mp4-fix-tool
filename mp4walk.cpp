@@ -25,10 +25,9 @@ int main(int argc, char** argv){
     // Capture frame-by-frame
     cap >> frame;
   
-    // If the frame is empty, break immediately
+    // If the frame is empty, reset to start
     if (frame.empty())
     {
-      //break;
       cap.set(CV_CAP_PROP_POS_FRAMES, 1);
       cap >> frame;
     }
@@ -41,10 +40,26 @@ int main(int argc, char** argv){
     char c=(char)waitKey(25);
     if(c==27)
       break;
-    else if(c==101)     // if you press 'e'
+    else if(c==101)     // if you press 'e' - enter a frame number
     {
         cin >> framenum;
         cap.set(CV_CAP_PROP_POS_FRAMES, framenum-1);
+    }
+    else if(c==112)     // 'p' - pause
+    {
+        // will crash if we go past last frame
+        do
+        {
+            c = (char)waitKey();
+
+            if(c==110)   // 'n' - next
+            {
+                cap >> frame;
+                imshow("Frame", frame );
+                cout << "Frame Number: " << cap.get(CV_CAP_PROP_POS_FRAMES) << "\n";
+            }
+        }
+        while(c==110);
     }
 
   }
