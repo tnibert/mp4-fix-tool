@@ -15,6 +15,8 @@ int main(int argc, char** argv){
     cout << "Error opening video stream or file" << endl;
     return -1;
   }
+
+  cout << "Total Frames: " << cap.get(CV_CAP_PROP_FRAME_COUNT) << "\n";
      
   while(1){
  
@@ -25,7 +27,8 @@ int main(int argc, char** argv){
     // If the frame is empty, break immediately
     if (frame.empty())
       break;
- 
+
+    cout << "Frame Number: " << cap.get(CV_CAP_PROP_POS_FRAMES) << "\n";
     // Display the resulting frame
     imshow( "Frame", frame );
  
@@ -33,6 +36,11 @@ int main(int argc, char** argv){
     char c=(char)waitKey(25);
     if(c==27)
       break;
+    else if(c==101)     // if you press 'e'
+    {
+        
+    }
+
   }
   
   // When everything done, release the video capture object
