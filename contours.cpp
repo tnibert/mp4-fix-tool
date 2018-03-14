@@ -6,14 +6,14 @@
 using namespace cv;
 using namespace std;
 
-int return_largest_contour( )
+int return_largest_contour( Mat image )
 {
-    Mat image;
+    // this is waiting for a key press before outputting...
     int largest_area=0;
     int largest_contour_index=0;
     Rect bounding_rect;
     double a;
-    image = imread("cat.jpg", 1);  
+    //image = imread("cat.jpg", 1);  
     //namedWindow( "Display window", CV_WINDOW_AUTOSIZE );  
     //imshow( "Display window", image );
     Mat gray;
@@ -25,7 +25,7 @@ int return_largest_contour( )
     RNG rng(12345);
     findContours( gray, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
     /// Draw contours
-    Mat drawing = Mat::zeros( gray.size(), CV_8UC3 );
+    //Mat drawing = Mat::zeros( gray.size(), CV_8UC3 );
     //cout << contours.size();
     for( int i = 0; i< contours.size(); i++ )
     {
@@ -40,7 +40,7 @@ int return_largest_contour( )
         //cout << "NEXT" << endl;
         //cout << largest_area << endl;
         //cout << contours[i] << endl;
-        Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
+        //Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
         //drawContours( drawing, contours, i, color, 2, 8, hierarchy, 0, Point() );
     }
 
@@ -53,6 +53,7 @@ int return_largest_contour( )
 
 int main()
 {
-    cout << return_largest_contour();
+    Mat image = imread("cat.jpg", 1);
+    cout << return_largest_contour(image);
     return 0;
 }
