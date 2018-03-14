@@ -1,5 +1,6 @@
 #include "opencv2/opencv.hpp"
 #include <iostream>
+#include "process.h"
  
 using namespace std;
 using namespace cv;
@@ -10,6 +11,7 @@ int main(int argc, char** argv){
   // If the input is the web camera, pass 0 instead of the video file name
   VideoCapture cap(argv[1]); 
   double framenum = 0;
+  int frame_contour;
 
   // Check if camera opened successfully
   if(!cap.isOpened()){
@@ -32,10 +34,11 @@ int main(int argc, char** argv){
       cap >> frame;
     }
 
-    cout << "Frame Number: " << cap.get(CV_CAP_PROP_POS_FRAMES) << "\n";
+    frame_contour = return_largest_contour(frame);
+
+    cout << "Frame Number: " << cap.get(CV_CAP_PROP_POS_FRAMES) << " Largest Contour: " << frame_contour << "\n";
     // Display the resulting frame
     imshow( "Frame", frame );
- 
     // Press  ESC on keyboard to exit
     char c=(char)waitKey(25);
     if(c==27)

@@ -6,7 +6,7 @@
 using namespace cv;
 using namespace std;
 
-int return_largest_contour( Mat image )
+int return_largest_contour( cv::Mat image )
 {
     // this is waiting for a key press before outputting...
     int largest_area=0;
@@ -51,9 +51,9 @@ int return_largest_contour( Mat image )
     return largest_area;
 }
 
-int main()
+/*int main()
 {
     Mat image = imread("cat.jpg", 1);
     cout << return_largest_contour(image);
     return 0;
-}
+}*/
