@@ -4,12 +4,12 @@
  
 using namespace std;
 using namespace cv;
- 
-int main(int argc, char** argv){
- 
+
+int mp4walk(char * fname)
+{
   // Create a VideoCapture object and open the input file
   // If the input is the web camera, pass 0 instead of the video file name
-  VideoCapture cap(argv[1]); 
+  VideoCapture cap(fname);
   double framenum = 0;
   int frame_contour;
 
@@ -20,7 +20,7 @@ int main(int argc, char** argv){
   }
 
   cout << "Total Frames: " << cap.get(CV_CAP_PROP_FRAME_COUNT) << "\n";
-     
+
   while(1){
  
     Mat frame;
@@ -75,3 +75,18 @@ int main(int argc, char** argv){
      
   return 0;
 }
+
+int main(int argc, char** argv){
+ 
+  // check input
+  if(argc != 2)
+  {
+    cout << "Please enter one argument of video file" << endl;
+    return 1;
+  }
+
+  return mp4walk(argv[1]);
+
+}
+
+
