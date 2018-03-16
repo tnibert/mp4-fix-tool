@@ -5,7 +5,7 @@
 using namespace std;
 using namespace cv;
 
-int mp4walk(char * fname)
+VideoCapture mp4walk(char * fname)
 {
   // Create a VideoCapture object and open the input file
   // If the input is the web camera, pass 0 instead of the video file name
@@ -22,11 +22,13 @@ int mp4walk(char * fname)
   cout << "Total Frames: " << cap.get(CV_CAP_PROP_FRAME_COUNT) << "\n";
 
   while(1){
- 
+
     Mat frame;
     // Capture frame-by-frame
     cap >> frame;
-  
+
+    Mat denoisedframe;
+
     // If the frame is empty, reset to start
     if (frame.empty())
     {
@@ -37,8 +39,15 @@ int mp4walk(char * fname)
     frame_contour = return_largest_contour(frame);
 
     cout << "Frame Number: " << cap.get(CV_CAP_PROP_POS_FRAMES) << " Largest Contour: " << frame_contour << "\n";
+
+    // denoise the image
+    // oh my lord this takes forever, was not meant for on the fly use
+    fastNlMeansDenoisingColored(frame, denoisedframe);
+
     // Display the resulting frame
-    imshow( "Frame", frame );
+    //imshow( "Frame", frame );
+    imshow("Denoised", denoisedframe);
+
     // Press  ESC on keyboard to exit
     char c=(char)waitKey(25);
     if(c==27)
@@ -66,18 +75,18 @@ int mp4walk(char * fname)
     }
 
   }
-  
+
   // When everything done, release the video capture object
   cap.release();
- 
+
   // Closes all the frames
   destroyAllWindows();
-     
-  return 0;
+
+  return cap;
 }
 
 int main(int argc, char** argv){
- 
+
   // check input
   if(argc != 2)
   {
@@ -85,8 +94,8 @@ int main(int argc, char** argv){
     return 1;
   }
 
-  return mp4walk(argv[1]);
+  VideoCapture cap = mp4walk(argv[1]);
+
+  return 0;
 
 }
-
-
